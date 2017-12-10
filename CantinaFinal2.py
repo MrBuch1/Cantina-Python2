@@ -7,5 +7,5 @@ import MySQLdb
 tempo = time()
 tempo.imprimeTime()
 
-Atendente.cadastraProduto()
+Administrador.cadastraAluno("adm")
 

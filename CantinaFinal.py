@@ -52,8 +52,7 @@ class Administrador(Pessoa):
         numma = input("Insira o número de matríucula do aluno:\n")
         turma = input("Insira a turma do aluno:\n")
         sala = input("Insira a sala do aluno:\n")
-        cursor.execute('insert into aluno ("nome, turma", "cpf", "datanasc", "rg", "nummatri") values ("%s", "%s", "%s",7'
-                       ' "%s", "%s", "%s")' % (nome, turma, cpf, nasc, rg, numma, sala))
+        cursor.execute('insert into aluno ("nome, turma", "cpf", "datanasc", "rg", "nummatri") values ("%s", "%s", "%s", "%s", "%s", "%s")' % (nome, turma, cpf, nasc, rg, numma, sala))
         con.commit()
 
     def cadastraTurma(self):

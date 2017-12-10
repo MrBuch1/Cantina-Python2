@@ -47,6 +47,10 @@ idTurma int,
 idPessoa int,
 nome varchar (30),
 turma varchar (20),
+cpf int, 
+datanasc date,
+rg int,
+nummatri int,
 primary key (idAluno),
 foreign key (idTurma) references turma(idTurma),
 foreign key (idPessoa) references pessoa (idPessoa)
@@ -97,4 +101,4 @@ primary key (idBanco),
 foreign key (idPedido) references pedido(idPedido)
 ); 
 
-select sum(preco) from produto; 
+alter table aluno add natanasc date
