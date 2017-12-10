@@ -19,6 +19,10 @@ class time:
 
     #def barrarhorario(self):
 
+class login:
+    def __init__(self, usuario):
+
+        self.__login = usuario
 
 
 class Pessoa:
@@ -45,10 +49,13 @@ class Administrador(Pessoa):
         cpf = input("Insira o CPF do aluno:\n")
         nasc = input("Insira a data de nascimento do aluno:\n")
         rg = input("Insira o RG do aluno:\n")
+        numma = input("Insira o número de matríucula do aluno:\n")
         turma = input("Insira a turma do aluno:\n")
         sala = input("Insira a sala do aluno:\n")
-        cursor.execute('insert into aluno ("nome, turma") values ("%s", "%s")' % (nome, turma))
+        cursor.execute('insert into aluno ("nome, turma", "cpf", "datanasc", "rg", "nummatri") values ("%s", "%s", "%s",7'
+                       ' "%s", "%s", "%s")' % (nome, turma, cpf, nasc, rg, numma, sala))
         con.commit()
+
     def cadastraTurma(self):
         #SQL de cadastro de turma
         #aqui talvez na Tabela turma tenha a sala
@@ -56,12 +63,18 @@ class Administrador(Pessoa):
         turma = input("Insira a turma que deseja cadastrar:\n")
         cursor.execute('insert into turma ("horario", "nomeTura") values ("%s", "%s")' % (hora, turma))
         con.commit()
+
     def cadastraSala(self):
         #SQL de cadastro de sala
         #Aqui talvez na tabela sala tenha o horário de intervalo
-        horario = str("20:00")
-        sala = input("Insira a sala que deseja cadastrar:\n")
-        cursor.execute('insert into sala ("nome", "hora_interv") values ("%s", "%s"' % (sala, horario))
+        horario1 = str("20:00")
+        sala1 = input("Insira a primeira sala que deseja cadastrar:\n")
+        cursor.execute('insert into sala ("nome", "hora_interv") values ("%s", "%s"' % (sala1, horario1))
+        con.commit()
+
+        horario2 = str("20:30")
+        sala2 = input("Insira a segunda sala que deseja cadastrar:\n")
+        cursor.execute('insert into sala ("nome", "hora_interv") values ("%s", "%s"' % (sala2, horario2))
         con.commit()
 
 
@@ -136,12 +149,13 @@ class Atendente (Pessoa):
         preço2 = str("R$1,50")
         preço3 = str("R$4,00")
 
-        cursor.execute('insert into produto ("nomeProduto", "preço" values ("%s", "%s")' % (produto1, preço1))
-        cursor.execute('insert into produto ("nomeProduto", "preço" values ("%s", "%s")' % (produto2, preço1))
-        cursor.execute('insert into produto ("nomeProduto", "preço" values ("%s", "%s")' % (produto3, preço1))
-        cursor.execute('insert into produto ("nomeProduto", "preço" values ("%s", "%s")' % (produto4, preço2))
-        cursor.execute('insert into produto ("nomeProduto", "preço" values ("%s", "%s")' % (produto5, preço2))
-        cursor.execute('insert into produto ("nomeProduto", "preço" values ("%s", "%s")' % (produto6, preço3))
+        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto1, preço1))
+        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto2, preço1))
+        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto3, preço1))
+        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto4, preço2))
+        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto5, preço2))
+        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto6, preço3))
+        con.commit()
 
     def verLucro(self, lucro):
 
