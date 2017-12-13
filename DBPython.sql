@@ -10,14 +10,6 @@ nomeTurma varchar (30),
 primary key (idTurma)
 );
 
-create table if not exists sala(
-idSala int not null auto_increment,
-idTurma int not null,
-nome varchar(15),
-hora_interv time,
-primary key (idSala),
-foreign key (idTurma) references turma(idTurma)
-);
 
 create table if not exists pessoa(
 idPessoa int not null auto_increment,
@@ -48,12 +40,21 @@ idPessoa int,
 nome varchar (30),
 turma varchar (20),
 cpf int, 
-datanasc date,
+datanasc varchar (50),
 rg int,
 nummatri int,
 primary key (idAluno),
 foreign key (idTurma) references turma(idTurma),
 foreign key (idPessoa) references pessoa (idPessoa)
+);
+
+create table if not exists sala(
+idSala int not null auto_increment,
+idTurma int not null,
+nome varchar(15),
+hora_interv time,
+primary key (idSala),
+foreign key (idTurma) references turma(idTurma)
 );
 
 create table if not exists atendente(
@@ -101,4 +102,3 @@ primary key (idBanco),
 foreign key (idPedido) references pedido(idPedido)
 ); 
 
-alter table aluno add natanasc date
