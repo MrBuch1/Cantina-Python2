@@ -17,12 +17,23 @@ class time:
         print(now.hour, ":", now.minute)
         print(now.day, "/", now.month, "/", now.year)
 
-    #def barrarhorario(self):
+    def barrarhorario(self):
+        now = datetime.now
+        if now.hour < 20 and now.minute == 0:
+            print("Espere a hora do intervalo.")
+
+        elif now.hour > 20 and now.minute > 45:
+            print("Já acabou o intervalo")
+
 
 class login:
     def __init__(self, usuario):
 
         self.__login = usuario
+
+        user = input("Insira seu rg: \n")
+        cursor.execute('insert into pessoa ("rg") values ("%s")' % (user))
+        con.commit()
 
 
 class Pessoa:
@@ -51,8 +62,8 @@ class Administrador(Pessoa):
         rg = input("Insira o RG do aluno:\n")
         numma = input("Insira o número de matríucula do aluno:\n")
         turma = input("Insira a turma do aluno:\n")
-        sala = input("Insira a sala do aluno:\n")
-        cursor.execute('insert into aluno ("nome, turma", "cpf", "datanasc", "rg", "nummatri") values ("%s", "%s", "%s", "%s", "%s", "%s")' % (nome, turma, cpf, nasc, rg, numma, sala))
+        #sala = input("Insira a sala do aluno:\n")
+        cursor.execute('insert into aluno ("nome, turma", "cpf", "datanasc", "rg", "nummatri") values ("%s", "%s", "%s", "%s", "%s", "%s")' % (nome, turma, cpf, nasc, rg, numma))
         con.commit()
 
     def cadastraTurma(self):
@@ -148,17 +159,19 @@ class Atendente (Pessoa):
         preço2 = str("R$1,50")
         preço3 = str("R$4,00")
 
-        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto1, preço1))
-        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto2, preço1))
-        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto3, preço1))
-        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto4, preço2))
-        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto5, preço2))
-        cursor.execute('insert into produto ("nomeProduto", "preço") values ("%s", "%s")' % (produto6, preço3))
+        cursor.execute('insert into produto ("preço", "nomeProduto") values ("%s", "%s")' % (produto1, preço1))
+        cursor.execute('insert into produto ("preço", "nomeProduto") values ("%s", "%s")' % (produto2, preço1))
+        cursor.execute('insert into produto ("preço", "nomeProduto") values ("%s", "%s")' % (produto3, preço1))
+        cursor.execute('insert into produto ("preço", "nomeProduto") values ("%s", "%s")' % (produto4, preço2))
+        cursor.execute('insert into produto ("preço", "nomeProduto") values ("%s", "%s")' % (produto5, preço2))
+        cursor.execute('insert into produto ("preço", "nomeProduto") values ("%s", "%s")' % (produto6, preço3))
         con.commit()
 
     def verLucro(self, lucro):
 
         self.__lucro = lucro
+
+
 
 
 class Aluno(Pessoa):
