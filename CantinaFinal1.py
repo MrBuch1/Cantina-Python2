@@ -149,17 +149,25 @@ class Atendente (Pessoa):
    #    self.__prod = prod
 
     def cadastraProduto(self):
-        produto1 = input("Digite o produto: \n")
-        #produto2 = str("Coxinha")
-        #produto3 = str("Enroladinho")
-        #produto4 = str("Suco de Goiaba")
-        #produto5 = str("Suco de Manga")
-        #produto6 = str("Casadinhha")
-        preço1 = input("Digite o valor do produto: \n")
-        #preço2 = str("R$1,50")
-        #preço3 = str("R$4,00")
 
+        produto1 = input("Digite o produto: \n")
+        preço1 = input("Digite o valor do produto: \n")
         cursor.execute('insert into produto (nomeProduto, preço) values ("%s", "%s")' % (produto1, preço1))
+        con.commit()
+        condicao = input("Deseja cadastrar outro produto? Digite 's' para SIM ou 'n' para NÃO \n")
+        if condicao == "s":
+            while (condicao == "s"):
+                produto1 = input("Digite o produto: \n")
+                preço1 = input("Digite o valor do produto: \n")
+                condicao = input("Deseja cadastrar outro produto? Digite 's' para SIM ou 'n' para NÃO \n")
+                cursor.execute('insert into produto (nomeProduto, preço) values ("%s", "%s")' % (produto1, preço1))
+                con.commit()
+
+        elif condicao == 'n':
+            print("Produtos cadastrados com sucesso.")
+
+
+
         #cursor.execute('insert into produto (preço, nomeProduto) values ("%s", "%s")' % (produto2, preço1))
         #cursor.execute('insert into produto (preço, nomeProduto) values ("%s", "%s")' % (produto3, preço1))
         #cursor.execute('insert into produto (preço, nomeProduto) values ("%s", "%s")' % (produto4, preço2))
@@ -176,24 +184,24 @@ class Atendente (Pessoa):
 
 class Aluno(Pessoa):
 
-    def __init__(self, nome, cpf, datanasc,rg):
+    def __init__(self, nome, cpf, datanasc, rg, numma, tur, sala):
 
         super().__init__(nome, cpf, datanasc, rg)
 
-    def __init__(self, numma, tur, sala):
+    #def __init__(self, numma, tur, sala):
 
-        self.__nAluno = numma
-        self.__turma = tur
-        self.__sala = sala
+     #   self.__nAluno = numma
+      #  self.__turma = tur
+       # self.__sala = sala
 
 
 
-    def pedido(self, pedido):
+    def pedido(self):
 
-        self.__pedido = pedido
+        #self.__pedido = pedido
         now = datetime.now()
         hora = now.hour
-        inserir = input("O que você quer comer?"
+        inserir = input("O que você quer comer?\n"
                         "\n1 - Peça R$2,50"
                         "\n2 - Suco R$2,50"
                         "\n3 - Casadinha R$2,50")
@@ -201,9 +209,10 @@ class Aluno(Pessoa):
         con.commit()
 
 
-    def verCardapio(self, cardapio):
 
-        self.__cardapio = cardapio
+    def verCardapio(self, pedido):
+
+        self.__cardapio = pedido
         if pedido == 1:
             preço1 = str("R$2,50")
             escolher1 = input("Escolha uma opção:"

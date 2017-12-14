@@ -80,11 +80,9 @@ primary key (idPedido)
         
 create table if not exists produto (
 idProduto int auto_increment not null,
-idPedido int,
 nomeProduto varchar (15),
 preço varchar (25),
-primary key (idProduto),
-foreign key (idPedido) references pedido(idPedido)
+primary key (idProduto)
 );
 
 create table if not exists lucro (
@@ -102,3 +100,4 @@ primary key (idBanco),
 foreign key (idPedido) references pedido(idPedido)
 ); 
 
+drop table produto
