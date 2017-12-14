@@ -80,7 +80,7 @@ primary key (idPedido)
         
 create table if not exists produto (
 idProduto int auto_increment not null,
-nomeProduto varchar (15),
+nomeProduto varchar (50),
 preço varchar (25),
 primary key (idProduto)
 );
@@ -100,4 +100,4 @@ primary key (idBanco),
 foreign key (idPedido) references pedido(idPedido)
 ); 
 
-drop table produto
+alter table produto modify nomeProduto varchar (50);

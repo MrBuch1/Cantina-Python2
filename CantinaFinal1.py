@@ -32,7 +32,7 @@ class login:
         self.__login = usuario
 
         user = input("Insira seu rg: \n")
-        cursor.execute('insert into pessoa ("rg") values ("%s")' % (user))
+        cursor.execute('insert into pessoa (rg) values ("%s")' % (user))
         con.commit()
 
 
@@ -56,15 +56,45 @@ class Administrador(Pessoa):
 
     def cadastraAluno(self):
         #SQL de cadastro
-        nome = input("Insira o nome do aluno:\n")
-        cpf = input("Insira o CPF do aluno:\n")
-        nasc = input("Insira a data de nascimento do aluno:\n")
-        rg = input("Insira o RG do aluno:\n")
-        numma = input("Insira o número de matríucula do aluno:\n")
-        turma = input("Insira a turma do aluno:\n")
-        #sala = input("Insira a sala do aluno:\n")
-        cursor.execute('insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' % (nome, turma, cpf, nasc, rg, numma))
+        aluno1 = input("Digite o nome do aluno: \n")
+        tur1 = input("Digite a turma do aluno: \n")
+        cpf1 = input("Digite o cpf do aluno: \n")
+        nasc1 = input("Digite a data de nascimento do aluno: \n")
+        rg1 = input("Digite o rg do aluno: \n")
+        numma1 = input("Digite o número de matrícula do aluno: \n")
+        #sala1 = input("Digite a sala do aluno: \n")
+        cursor.execute(
+            'insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' %
+            (aluno1, tur1, cpf1, nasc1, rg1, numma1))
         con.commit()
+        condicao1 = input("Deseja cadastrar outro aluno? Digite 's' para SIM ou 'n' para NÃO \n")
+        if condicao1 == "s":
+            while (condicao1 == "s"):
+                aluno1 = input("Digite o nome do aluno: \n")
+                tur1 = input("Digite a turma do aluno: \n")
+                cpf1 = input("Digite o cpf do aluno: \n")
+                nasc1 = input("Digite a data de nascimento do aluno: \n")
+                rg1 = input("Digite o rg do aluno: \n")
+                numma1 = input("Digite o número de matrícula do aluno: \n")
+                # sala1 = input("Digite a sala do aluno: \n")
+                cursor.execute(
+                    'insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' %
+                    (aluno1, tur1, cpf1, nasc1, rg1, numma1))
+                con.commit()
+                #condicao1 = input("Deseja cadastrar outro aluno? Digite 's' para SIM ou 'n' para NÃO \n")
+
+        elif condicao1 == 'n':
+            print("Alunos cadastrados com sucesso.")
+
+       #nome = input("Insira o nome do aluno:\n")
+       #cpf = input("Insira o CPF do aluno:\n")
+       #nasc = input("Insira a data de nascimento do aluno:\n")
+       #rg = input("Insira o RG do aluno:\n")
+       #numma = input("Insira o número de matríucula do aluno:\n")
+       #turma = input("Insira a turma do aluno:\n")
+       ##sala = input("Insira a sala do aluno:\n")
+       #cursor.execute('insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' % (nome, turma, cpf, nasc, rg, numma))
+       #con.commit()
 
     def cadastraTurma(self):
         #SQL de cadastro de turma
@@ -201,13 +231,13 @@ class Aluno(Pessoa):
         #self.__pedido = pedido
         now = datetime.now()
         hora = now.hour
-        inserir = input("O que você quer comer?\n"
+        inserir = input("O que você quer comer?"
                         "\n1 - Peça R$2,50"
                         "\n2 - Suco R$2,50"
-                        "\n3 - Casadinha R$2,50")
+                        "\n3 - Casadinha R$2,50\n")
         cursor.execute('insert into pedido (horario, numPedido) values ("%s", "%s")' % (hora, inserir))
         con.commit()
-
+        return inserir
 
 
     def verCardapio(self, pedido):
