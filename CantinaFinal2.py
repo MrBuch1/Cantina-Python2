@@ -1,4 +1,4 @@
-from Avaliação2.CantinaFinal1 import time, Pessoa, Administrador, Produto, Atendente, Aluno, pedido#, login
+from Avaliação2.CantinaFinal1 import time, Pessoa, Administrador, Produto, Atendente, Aluno, pedido, login
 import MySQLdb
 
 #aqui talvez tenha a parte principal do teu programa, onde o usuário vai fazer um "login" e o sistema saberá
@@ -10,6 +10,6 @@ prod = Produto("prod", "valorprod", "nomeprod", "codprod")
 ped = pedido("numped", "valorped", "prod")
 alu = Aluno ("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
 barrahora = time()
-#log = login ("Pessoa")
+log = login ("Pessoa")
 
-admin.cadastraSala()
+log.access()

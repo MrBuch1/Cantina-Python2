@@ -6,7 +6,7 @@ use cantina;
 create table if not exists turma (
 idTurma int auto_increment not null,
 horario time,
-nomeTurma varchar (30),
+salaTurma varchar (30),
 primary key (idTurma)
 );
  
@@ -53,8 +53,7 @@ idSala int not null auto_increment,
 idTurma int not null,
 nome varchar(15),
 hora_interv time,
-primary key (idSala),
-foreign key (idTurma) references turma(idTurma)
+primary key (idSala)
 );
 
 create table if not exists atendente(
@@ -99,5 +98,13 @@ idPedido int,
 primary key (idBanco),
 foreign key (idPedido) references pedido(idPedido)
 ); 
- 
-alter table turma add horario varchar(20)
+
+create table if not exists login(
+log int not null auto_increment,
+adm int not null,
+atend int not null,
+aluno int not null,
+primary key (log)
+);
+
+insert into login (adm, atend) values ("1234567890", "0987654321")

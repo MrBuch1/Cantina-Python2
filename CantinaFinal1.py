@@ -6,7 +6,9 @@ con = MySQLdb.connect('localhost', 'root', '')
 con.select_db('cantina')
 
 cursor = con.cursor()
-
+rgaluno = int
+#salaalu = str
+lucro = float
 
 class time:
     #pra que essa classe? o horário só é necessário na classe principal para limitar o horário e
@@ -40,9 +42,31 @@ class login:
 
         self.__login = usuario
 
-        user = input("Insira seu rg: \n")
-        cursor.execute('insert into pessoa (rg) values ("%s")' % (user))
-        con.commit()
+    def access(self):
+        user = int(input("Insira seu rg: \n"))
+        cursor.execute('select * from login')
+        a = cursor.fetchall()
+
+        for i in a:
+            auxiliar = int(i[0])
+            if auxiliar == user:
+                adm = Administrador("Ademilson", "2147483647", "0000-00-00", "1234567890", "Administrador",
+                                    "1234567890")
+                opcao = input("O que deseja fazer?"
+                      "\n1 - Cadastrar alunos"
+                      "\n2 - Cadastrar turmas"
+                      "\n3 - Cadastrar salas \n")
+
+                if opcao == 1:
+                    adm.cadastraAluno()
+
+                elif opcao == 2:
+                    adm.cadastraTurma()
+
+                elif opcao == 3:
+                    adm.cadastraSala()
+
+
 
 
 class Pessoa:
@@ -72,9 +96,7 @@ class Administrador(Pessoa):
         rg1 = input("Digite o rg do aluno: \n")
         numma1 = input("Digite o número de matrícula do aluno: \n")
         #sala1 = input("Digite a sala do aluno: \n")
-        cursor.execute(
-            'insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' %
-            (aluno1, tur1, cpf1, nasc1, rg1, numma1))
+        cursor.execute('insert into login (aluno) values ("%s")' % (rg1))
         con.commit()
         condicao1 = input("Deseja cadastrar outro aluno? Digite 's' para SIM ou 'n' para NÃO \n")
         if condicao1 == "s":
@@ -126,20 +148,22 @@ class Administrador(Pessoa):
     def cadastraSala(self):
         #SQL de cadastro de sala
         #Aqui talvez na tabela sala tenha o horário de intervalo
-        sala1 = input("Digite a sala que deseja cadastrar: \n")
+        salaalu = input("Digite a sala que deseja cadastrar: \n")
         horario2 = input("Digite o horário de intevalo da sala: \n")
-        cursor.execute('insert into sala (nome, hora_interv) values ("%s", "%s")' % (sala1, horario2))
+        cursor.execute('insert into sala (nome, hora_interv) values ("%s", "%s")' % (salaalu, horario2))
         con.commit()
         condicao = input("Deseja cadastrar outra sala? Digite 's' para SIM ou 'n' para NÃO \n")
         if condicao == "s":
             while (condicao == "s"):
-                sala1 = input("Digite a sala que deseja cadastrar: \n")
+                salaalu = input("Digite a sala que deseja cadastrar: \n")
                 horario2 = input("Digite o horário de intervalo da sala: \n")
-                cursor.execute('insert into sala (nome, hora_interv) values ("%s", "%s")' % (sala1, horario2))
+                cursor.execute('insert into sala (nome, hora_interv) values ("%s", "%s")' % (salaalu, horario2))
                 con.commit()
 
         elif condicao == 'n':
             print("Salas cadastradas com sucesso.")
+
+            return salaalu
 
 
 class pedido:
@@ -249,12 +273,28 @@ class Aluno(Pessoa):
      #   self.__nAluno = numma
       #  self.__turma = tur
        # self.__sala = sala
-    def entrada(self):
+    '''def entrada(self):
         logintur = input("Digite sua turma: \n")
-        loginsala = input("Digite a sua sala: \n")
-        #if loginsala == "chp54125":
+        salaalu = input("Digite a sua sala: \n")
+        cursor.execute('select nome from sala')
+        admin = Administrador("Lucas", "123456", "123456", "123456", "administrador", "654321")
+        b = admin.cadastraSala()
+        a = cursor.fetchall()
+        for i in a:
+            if salaalu == b:
+                time.barrarhorario()'''
 
-
+    def entrada(self):
+        user = int(input("Insira seu rg: \n"))
+        cursor.execute('select aluno from login')
+        a = cursor.fetchall()
+        for i in a:
+            auxiliar = int(i[0])
+            if auxiliar == user:
+                print("O que deseja fazer?"
+                    "\n1 - Cadastrar alunos"
+                    "\n2 - Cadastrar turmas"
+                    "\n3 - Cadastrar salas \n")
 
 
 
