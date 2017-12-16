@@ -48,20 +48,21 @@ class login:
 
     def access(self):
         user = int(input("Insira seu rg: \n"))
-        cursor.execute('select * from login')
+        cursor.execute('select adm, atend, aluno from login')
         a = cursor.fetchall()
 
         for i in a:
-            auxiliar = int(i[0])
-            if auxiliar == user:
+            auxiliar1 = int(i[0])
+            auxiliar2 = int(i[1])
+            auxiliar3 = int(i[2])
+            if auxiliar1 == user:
                 admin = Administrador("Ademilson", "2147483647", "0000-00-00", "1234567890", "Administrador",
                                       "1234567890")
-                atend = Atendente("Maria", "102938", "15/08/1987", "123567")
-                alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
-                opcao = input("O que deseja fazer?"
-                              "\n1 - Cadastrar alunos"
-                              "\n2 - Cadastrar turmas"
-                              "\n3 - Cadastrar salas \n")
+
+                opcao = int(input("O que deseja fazer?"
+                                  "\n1 - Cadastrar alunos"
+                                  "\n2 - Cadastrar turmas"
+                                  "\n3 - Cadastrar salas \n"))
 
                 if opcao == 1:
                     admin.cadastraAluno()
@@ -71,6 +72,49 @@ class login:
 
                 elif opcao == 3:
                     admin.cadastraSala()
+
+
+            elif auxiliar2 == user:
+                atend = Atendente("Maria", "102938", "15/08/1987", "123567")
+                opcao = int(input("O que deseja fazer?"
+                                  "\n1 - Cadastrar produtos"
+                                  "\n2 - Ver lucro do dia"))
+
+                if opcao == 1:
+                    atend.cadastraProduto()
+
+                elif opcao == 2:
+                    atend.verLucro()
+
+            elif auxiliar3 == user:
+
+                inserir = int(input("O que você quer comer?"
+                                    "\n 1 - Peça R$2,50"
+                                    "\n 2 - Suco R$2,50"
+                                    "\n 3 - Casadinha R$2,50\n"))
+
+                if inserir == 1:
+                    preço1 = str("R$2,50")
+                    escolher1 = int(input("Escolha uma opção:"
+                                          "\n1 - Pastel"
+                                          "\n2 - Coxinha"
+                                          "\n3 - Enroladinho \n"))
+
+                    if escolher1 == 1:
+                        print("pegue seu Pastel")
+                        escolher1 = str("Pastel")
+
+                    elif escolher1 == 2:
+                        print("pegue sua Coxinha")
+                        escolher1 = str("Coxinha")
+
+                    elif escolher1 == 3:
+                        print("pegue seu Enroladinho")
+                        escolher1 = str("Enroladinho")
+
+                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                                   (inserir, escolher1, preço1))
+                    con.commit()
 
 
 class Pessoa:
@@ -250,7 +294,6 @@ class Atendente(Pessoa):
     def verLucro(self, lucro):
 
         self.__lucro = lucro
-
 
 
 class Aluno(Pessoa):

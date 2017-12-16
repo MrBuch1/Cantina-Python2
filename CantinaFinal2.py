@@ -12,4 +12,4 @@ alu = Aluno ("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", 
 barrahora = time("hora")
 log = login ("Pessoa")
 
-alu.entrada()
+log.access()
