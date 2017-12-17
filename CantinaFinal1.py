@@ -26,19 +26,25 @@ class time:
 
     def barrarhorario(self):
         now = datetime.now()
-        if now.hour < 20 and now.minute == 0:
-            print("Espere a hora do intervalo.")
+        cursor.execute('select nome from sala where hora_interv = "20:00:00"')
+        a = cursor.fetchall()
+        for i in a:
+            if now.hour < 20: #and now.minute == 0:
+                print("Espere a hora do intervalo.")
 
-        elif now.hour >= 20 and now.minute > 45:
-            print("Já acabou o intervalo")
+            elif now.hour > 20:  # and now.minute > 45 and now.hour > 20:
+                print("Já acabou o intervalo.")
 
     def barrarhorario1(self):
         now = datetime.now()
-        if now.hour < 20 and now.minute == 0:
-            print("Espere a hora do intervalo.")
+        cursor.execute('select nome from sala where hora_interv = "20:30:00"')
+        a = cursor.fetchall()
+        for i in a:
+            if now.hour < 12:  # and now.minute == 0:
+                print("Espere a hora do intervalo.")
 
-        elif now.hour >= 20 and now.minute > 45:
-            print("Já acabou o intervalo")
+            elif now.hour > 20:  # and now.minute > 45 and now.hour > 20:
+                print("Já acabou o intervalo.")
 
 
 class login:
@@ -47,6 +53,7 @@ class login:
         self.__login = usuario
 
     def access(self):
+        barrahora = time("hora")
         user = int(input("Insira seu rg: \n"))
         cursor.execute('select adm, atend, aluno from login')
         a = cursor.fetchall()
@@ -88,33 +95,45 @@ class login:
 
             elif auxiliar3 == user:
 
-                inserir = int(input("O que você quer comer?"
-                                    "\n 1 - Peça R$2,50"
-                                    "\n 2 - Suco R$2,50"
-                                    "\n 3 - Casadinha R$2,50\n"))
+                tur = input("Insira sua sala: \n")
+                cursor.execute('select nome from sala where hora_interv = "20:00:00"')
+                barrahora = time("hora")
+                barrahora.barrarhorario()
+                a = cursor.fetchall()
+                for i in a:
+                    auxiliar1 = str(i[0])
+                    if auxiliar1 == tur:
+                        alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
+                        alu.pedido()
 
-                if inserir == 1:
-                    preço1 = str("R$2,50")
-                    escolher1 = int(input("Escolha uma opção:"
-                                          "\n1 - Pastel"
-                                          "\n2 - Coxinha"
-                                          "\n3 - Enroladinho \n"))
 
-                    if escolher1 == 1:
-                        print("pegue seu Pastel")
-                        escolher1 = str("Pastel")
+                # inserir = int(input("O que você quer comer?"
+                #                   "\n 1 - Peça R$2,50"
+                #                   "\n 2 - Suco R$2,50"
+                #                   "\n 3 - Casadinha R$2,50\n"))
 
-                    elif escolher1 == 2:
-                        print("pegue sua Coxinha")
-                        escolher1 = str("Coxinha")
+                # f inserir == 1:
+                #   preço1 = str("R$2,50")
+                #   escolher1 = int(input("Escolha uma opção:"
+                #                         "\n1 - Pastel"
+                #                         "\n2 - Coxinha"
+                #                         "\n3 - Enroladinho \n"))
 
-                    elif escolher1 == 3:
-                        print("pegue seu Enroladinho")
-                        escolher1 = str("Enroladinho")
+                #   if escolher1 == 1:
+                #       print("pegue seu Pastel")
+                #       escolher1 = str("Pastel")
 
-                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
-                                   (inserir, escolher1, preço1))
-                    con.commit()
+                #   elif escolher1 == 2:
+                #       print("pegue sua Coxinha")
+                #       escolher1 = str("Coxinha")
+
+                #   elif escolher1 == 3:
+                #       print("pegue seu Enroladinho")
+                #       escolher1 = str("Enroladinho")
+
+                #   cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                #                  (inserir, escolher1, preço1))
+                #   con.commit()
 
 
 class Pessoa:
@@ -142,6 +161,9 @@ class Administrador(Pessoa):
         numma1 = input("Digite o número de matrícula do aluno: \n")
         # sala1 = input("Digite a sala do aluno: \n")
         cursor.execute('insert into login (aluno) values ("%s")' % (rg1))
+        cursor.execute(
+            'insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' %
+            (aluno1, tur1, cpf1, nasc1, rg1, numma1))
         con.commit()
         condicao1 = input("Deseja cadastrar outro aluno? Digite 's' para SIM ou 'n' para NÃO \n")
         if condicao1 == "s":
@@ -153,6 +175,7 @@ class Administrador(Pessoa):
                 rg1 = input("Digite o rg do aluno: \n")
                 numma1 = input("Digite o número de matrícula do aluno: \n")
                 # sala1 = input("Digite a sala do aluno: \n")
+                cursor.execute('insert into login (aluno) values ("%s")' % (rg1))
                 cursor.execute(
                     'insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' %
                     (aluno1, tur1, cpf1, nasc1, rg1, numma1))
@@ -332,69 +355,76 @@ class Aluno(Pessoa):
         # self.__pedido = pedido
         # now = datetime.now()
         # hora = now.hour
-        inserir = int(input("O que você quer comer?"
-                            "\n 1 - Peça R$2,50"
-                            "\n 2 - Suco R$2,50"
-                            "\n 3 - Casadinha R$2,50\n"))
 
-        if inserir == 1:
-            preço1 = str("R$2,50")
-            escolher1 = int(input("Escolha uma opção:"
-                                  "\n1 - Pastel"
-                                  "\n2 - Coxinha"
-                                  "\n3 - Enroladinho \n"))
+                inserir = int(input("O que você quer comer?"
+                                    "\n 1 - Peça R$2,50"
+                                    "\n 2 - Suco R$2,50"
+                                    "\n 3 - Casadinha R$2,50\n"))
 
-            if escolher1 == 1:
-                print("pegue seu Pastel")
-                escolher1 = str("Pastel")
+                if inserir == 1:
+                    preço1 = str("R$2,50")
+                    escolher1 = int(input("Escolha uma opção:"
+                                          "\n1 - Pastel"
+                                          "\n2 - Coxinha"
+                                          "\n3 - Enroladinho \n"))
 
-            elif escolher1 == 2:
-                print("pegue sua Coxinha")
-                escolher1 = str("Coxinha")
+                    if escolher1 == 1:
+                        print("pegue seu Pastel")
+                        escolher1 = str("Pastel")
 
-            elif escolher1 == 3:
-                print("pegue seu Enroladinho")
-                escolher1 = str("Enroladinho")
+                    elif escolher1 == 2:
+                        print("pegue sua Coxinha")
+                        escolher1 = str("Coxinha")
 
-            cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
-                           (inserir, escolher1, preço1))
-            con.commit()
+                    elif escolher1 == 3:
+                        print("pegue seu Enroladinho")
+                        escolher1 = str("Enroladinho")
 
+                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                                (inserir, escolher1, preço1))
+                    con.commit()
 
-        elif inserir == 2:
-            preço2 = str("R$1,50")
-            escolher2 = int(input("Escolha uma opção:"
-                                  "\n1 - Goiaba"
-                                  "\n2 - Manga \n"))
+                elif inserir == 2:
+                    preço2 = str("R$1,50")
 
-            if escolher2 == 1:
-                print("pegue seu suco de Goiaba")
-                escolher2 = str("Suco de Goiaba")
+                    escolher2 = int(input("Escolha uma opção:"
+                          "\n1 - Goiaba"
+                          "\n2 - Manga \n"))
 
-            elif escolher2 == 2:
-                print("pegue seu suco de Manga")
-                escolher2 = str("Suco de Manga")
+                    if escolher2 == 1:
+                        print("pegue seu suco de Goiaba")
+                        escolher2 = str("Suco de Goiaba")
 
-            cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
-                           (inserir, escolher2, preço2))
-            con.commit()
+                    elif escolher2 == 2:
+                        print("pegue seu suco de Manga")
+                        escolher2 = str("Suco de Manga")
 
+                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                    (inserir, escolher2, preço2))
+                    con.commit()
 
-        elif inserir == 3:
-            preço3 = str("R$4,00")
-            escolher3 = str("Casadinha")
-            # casadinha = print("Pegue o lanche e o suco de sua preferência na cantina.")
+                elif inserir == 3:
+                    preço3 = str("R$4,00")
+                    escolher3 = str("Casadinha")
+                    casadinha = input("Escolha o lanche e o suco de sua preferência:"
+                                      "\n1 - Pastel + Suco de Goiaba"
+                                      "\n2 - Pastel + Suco de Manga"
+                                      "\n3 - Coxinha + Suco de Goiaba"
+                                      "\n4 - Coxinha + Suco de Manga"
+                                      "\n5 - Enroladinho + Suco de Goiaba"
+                                      "\n6 - Enroladinho + Suco de Manga \n")
+                    print("Pegue o lanche e o suco de sua preferência na cantina.")
 
-            cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
-                           (inserir, escolher3, preço3))
-            con.commit()
+                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                    (inserir, escolher3, preço3))
+                    con.commit()
 
-        ped = preço1 + preço2 + preço3
-        pedido = Aluno.pedido("pedido")
-        return pedido
-        # def verCardapio(self):
+# ped = inserir + inserir
+# pedido = Aluno.pedido("pedido")
+# return pedido
+# def verCardapio(self):
 
-        # self.__cardapio = pedido
+# self.__cardapio = pedido
 
 
 class sala:
