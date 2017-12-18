@@ -175,8 +175,8 @@ class Administrador(Pessoa):
             (aluno1, tur1, cpf1, nasc1, rg1, numma1))
         con.commit()
         condicao1 = input("Deseja cadastrar outro aluno? Digite 's' para SIM ou 'n' para NÃO \n")
-        if condicao1 == "s":
-            while (condicao1 == "s"):
+        if condicao1 == 's':
+            while (condicao1 == 's'):
                 aluno1 = input("Digite o nome do aluno: \n")
                 tur1 = input("Digite a turma do aluno: \n")
                 cpf1 = input("Digite o cpf do aluno: \n")
@@ -189,7 +189,9 @@ class Administrador(Pessoa):
                     'insert into aluno (nome, turma, cpf, datanasc, rg, nummatri) values ("%s", "%s", "%s", "%s", "%s", "%s")' %
                     (aluno1, tur1, cpf1, nasc1, rg1, numma1))
                 con.commit()
-                # condicao1 = input("Deseja cadastrar outro aluno? Digite 's' para SIM ou 'n' para NÃO \n")
+                condicao1 = input("Deseja cadastrar outro aluno? Digite 's' para SIM ou 'n' para NÃO \n")
+                if condicao1 == 'n':
+                    print("Alunos cadastrados com sucesso.")
 
         elif condicao1 == 'n':
             print("Alunos cadastrados com sucesso.")
@@ -212,12 +214,15 @@ class Administrador(Pessoa):
         cursor.execute('insert into turma (nomeTurma, horario) values ("%s", "%s")' % (turma1, horario1))
         con.commit()
         condicao = input("Deseja cadastrar outra turma? Digite 's' para SIM ou 'n' para NÃO \n")
-        if condicao == "s":
-            while (condicao == "s"):
+        if condicao == 's':
+            while (condicao == 's'):
                 turma1 = input("Digite a turma que deseja cadastrar: \n")
                 horario1 = input("Digite o horário de intervalo da turma: \n")
                 cursor.execute('insert into turma (nomeTurma, horario) values ("%s", "%s")' % (turma1, horario1))
                 con.commit()
+                condicao=input("Deseja cadastrar outra turma? Digite 's' para SIM ou 'n' para NÃO \n")
+                if condicao == 'n':
+                    print("Turmas cadastradas com sucesso.")
 
         elif condicao == 'n':
             print("Turmas cadastradas com sucesso.")
@@ -236,11 +241,14 @@ class Administrador(Pessoa):
                 horario2 = input("Digite o horário de intervalo da sala: \n")
                 cursor.execute('insert into sala (nome, hora_interv) values ("%s", "%s")' % (salaalu, horario2))
                 con.commit()
+                condicao = input("Deseja cadastrar outra sala? Digite 's' para SIM ou 'n' para NÃO \n")
+                if condicao == 'n':
+                    print("Salas cadastradas com sucesso.")
 
         elif condicao == 'n':
             print("Salas cadastradas com sucesso.")
 
-            return salaalu
+            #return salaalu
 
 
 '''class pedido:

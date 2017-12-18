@@ -5,8 +5,8 @@ use cantina;
  
 create table if not exists turma (
 idTurma int auto_increment not null,
+nomeTurma varchar(30),
 horario time,
-salaTurma varchar (30),
 primary key (idTurma)
 );
  
@@ -39,9 +39,9 @@ idTurma int,
 idPessoa int,
 nome varchar (30),
 turma varchar (20),
-cpf int, 
+cpf int (20), 
 datanasc varchar (50),
-rg int,
+rg int (20),
 nummatri int,
 primary key (idAluno),
 foreign key (idTurma) references turma(idTurma),
@@ -109,4 +109,4 @@ aluno int,
 primary key (log)
 );
 
-truncate pedido
+alter table aluno change cpf cpf int(20)
