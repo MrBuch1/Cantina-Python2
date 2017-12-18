@@ -28,24 +28,31 @@ class time:
         now = datetime.now()
         cursor.execute('select nome from sala where hora_interv = "20:00:00"')
         a = cursor.fetchall()
-        for i in a:
-            if now.hour < 20: #and now.minute == 0:
-                print("Espere a hora do intervalo.")
+        #for i in a:
+        if now.hour < 20: #and now.minute == 0:
+            print("Espere a hora do intervalo.")
 
-            elif now.hour > 20:  # and now.minute > 45 and now.hour > 20:
-                print("Já acabou o intervalo.")
+        elif now.hour >= 20 and now.minute > 20:
+            print("Já acabou o intervalo.")
+
+        else:
+            alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
+            alu.pedido()
 
     def barrarhorario1(self):
         now = datetime.now()
         cursor.execute('select nome from sala where hora_interv = "20:30:00"')
         a = cursor.fetchall()
-        for i in a:
-            if now.hour < 12:  # and now.minute == 0:
-                print("Espere a hora do intervalo.")
+        #for i in a:
+        if now.hour < 20 and now.minute < 20:
+           print("Espere a hora do intervalo.")
 
-            elif now.hour > 20:  # and now.minute > 45 and now.hour > 20:
-                print("Já acabou o intervalo.")
+        elif now.hour >= 20 and now.minute > 40:
+            print("Já acabou o intervalo.")
 
+        else:
+            alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
+            alu.pedido()
 
 class login:
     def __init__(self, usuario):
@@ -85,7 +92,7 @@ class login:
                 atend = Atendente("Maria", "102938", "15/08/1987", "123567")
                 opcao = int(input("O que deseja fazer?"
                                   "\n1 - Cadastrar produtos"
-                                  "\n2 - Ver lucro do dia"))
+                                  "\n2 - Ver lucro do dia \n"))
 
                 if opcao == 1:
                     atend.cadastraProduto()
@@ -105,6 +112,8 @@ class login:
                     if auxiliar1 == tur:
                         alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
                         alu.pedido()
+
+
 
 
                 # inserir = int(input("O que você quer comer?"
@@ -314,9 +323,18 @@ class Atendente(Pessoa):
         # cursor.execute('insert into produto (preço, nomeProduto) values ("%s", "%s")' % (produto6, preço3))
         con.commit()
 
-    def verLucro(self, lucro):
+    def verLucro(self):
 
-        self.__lucro = lucro
+        #self.__lucro = lucro
+
+        cursor.execute('select sum(valorPedido) from cantina.pedido')
+        lista = []
+        #str(lista).strip('[]').strip('()')
+
+        for luc in cursor.fetchall():
+            lista.append(luc)
+            print("Lucro total: ", str(lista).strip('[]').strip('()'))
+        con.commit()
 
 
 class Aluno(Pessoa):
@@ -358,53 +376,53 @@ class Aluno(Pessoa):
 
                 inserir = int(input("O que você quer comer?"
                                     "\n 1 - Peça R$2,50"
-                                    "\n 2 - Suco R$2,50"
-                                    "\n 3 - Casadinha R$2,50\n"))
+                                    "\n 2 - Suco R$1,50"
+                                    "\n 3 - Casadinha R$4,00\n"))
 
                 if inserir == 1:
-                    preço1 = str("R$2,50")
+                    preço1 = float(2.50)
                     escolher1 = int(input("Escolha uma opção:"
                                           "\n1 - Pastel"
                                           "\n2 - Coxinha"
                                           "\n3 - Enroladinho \n"))
 
                     if escolher1 == 1:
-                        print("pegue seu Pastel")
+                        print("pegue seu Pastel. Valor a pagar: R$2,50")
                         escolher1 = str("Pastel")
 
                     elif escolher1 == 2:
-                        print("pegue sua Coxinha")
+                        print("pegue sua Coxinha. Valor a pagar: R$2,50")
                         escolher1 = str("Coxinha")
 
                     elif escolher1 == 3:
-                        print("pegue seu Enroladinho")
+                        print("pegue seu Enroladinho. Valor a pagar: R$2,50")
                         escolher1 = str("Enroladinho")
 
-                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%.2f")' %
                                 (inserir, escolher1, preço1))
                     con.commit()
 
                 elif inserir == 2:
-                    preço2 = str("R$1,50")
+                    preço2 = float(1.50)
 
                     escolher2 = int(input("Escolha uma opção:"
                           "\n1 - Goiaba"
                           "\n2 - Manga \n"))
 
                     if escolher2 == 1:
-                        print("pegue seu suco de Goiaba")
+                        print("pegue seu suco de Goiaba. Valor a pagar: R$1,50")
                         escolher2 = str("Suco de Goiaba")
 
                     elif escolher2 == 2:
-                        print("pegue seu suco de Manga")
+                        print("pegue seu suco de Manga. Valor a pagar: R$1,50")
                         escolher2 = str("Suco de Manga")
 
-                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%.2f")' %
                     (inserir, escolher2, preço2))
                     con.commit()
 
                 elif inserir == 3:
-                    preço3 = str("R$4,00")
+                    preço3 = float(4.00)
                     escolher3 = str("Casadinha")
                     casadinha = input("Escolha o lanche e o suco de sua preferência:"
                                       "\n1 - Pastel + Suco de Goiaba"
@@ -413,12 +431,24 @@ class Aluno(Pessoa):
                                       "\n4 - Coxinha + Suco de Manga"
                                       "\n5 - Enroladinho + Suco de Goiaba"
                                       "\n6 - Enroladinho + Suco de Manga \n")
-                    print("Pegue o lanche e o suco de sua preferência na cantina.")
+                    print("Pegue o lanche e o suco de sua preferência na cantina. Valor a pagar: R$4,00")
 
-                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%s")' %
+                    cursor.execute('insert into pedido (numPedido, nomePedido, valorPedido) values ("%s", "%s", "%.2f")' %
                     (inserir, escolher3, preço3))
                     con.commit()
 
+                cursor.execute('select sum(valorPedido) from cantina.pedido')
+                lista = []
+                str(lista).strip('[]')
+
+                for luc in cursor.fetchall():
+                    lista.append(luc)
+                    #print("Lucro total:", lista)
+
+                lucro = str(lista).strip('[]').strip('()')
+
+                cursor.execute('insert into lucro (valLucro) values ("%s")' % (lucro))
+                con.commit()
 # ped = inserir + inserir
 # pedido = Aluno.pedido("pedido")
 # return pedido

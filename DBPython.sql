@@ -71,6 +71,8 @@ foreign key (idPessoa) references pessoa (idPessoa)
 idPedido int auto_increment not null,
 horario time,
 numPedido varchar (15),
+nomePedido varchar (50),
+valorPedido float (3),
 #peca varchar (25),
 #casadinha varchar (25),
 #suco varchar (25),
@@ -101,10 +103,10 @@ foreign key (idPedido) references pedido(idPedido)
 
 create table if not exists login(
 log int not null auto_increment,
-adm int not null,
-atend int not null,
-aluno int not null,
+adm int,
+atend int,
+aluno int,
 primary key (log)
 );
 
-insert into login (adm, atend) values ("1234567890", "0987654321")
+truncate pedido
