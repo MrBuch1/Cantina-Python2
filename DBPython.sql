@@ -109,4 +109,4 @@ aluno int,
 primary key (log)
 );
 
-alter table aluno change cpf cpf int(20)
+insert into login (atend) values ("0987654321")

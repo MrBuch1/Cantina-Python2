@@ -28,31 +28,31 @@ class time:
         now = datetime.now()
         cursor.execute('select nome from sala where hora_interv = "20:00:00"')
         a = cursor.fetchall()
-        #for i in a:
-        if now.hour < 20: #and now.minute == 0:
-            print("Espere a hora do intervalo.")
+        for i in a:
+            if now.hour < 20: #and now.minute == 0:
+                print("Espere a hora do intervalo.")
 
-        elif now.hour >= 20 and now.minute > 20:
-            print("Já acabou o intervalo.")
+            elif now.hour >= 20 and now.minute > 20:
+                print("Já acabou o intervalo.")
 
-        else:
-            alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
-            alu.pedido()
+            else:
+                alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
+                alu.pedido()
 
     def barrarhorario1(self):
         now = datetime.now()
         cursor.execute('select nome from sala where hora_interv = "20:30:00"')
         a = cursor.fetchall()
-        #for i in a:
-        if now.hour < 20 and now.minute < 20:
-           print("Espere a hora do intervalo.")
+        for i in a:
+            if now.hour < 20 and now.minute < 30:
+                print("Espere a hora do intervalo.")
 
-        elif now.hour >= 20 and now.minute > 40:
-            print("Já acabou o intervalo.")
+            elif now.hour >= 20 and now.minute > 40:
+                print("Já acabou o intervalo.")
 
-        else:
-            alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
-            alu.pedido()
+            else:
+                alu = Aluno("Tininzinho", "234516", "31/07/1999", "087965", "123456", "51175", "Cisco")
+                alu.pedido()
 
 class login:
     def __init__(self, usuario):
@@ -320,6 +320,9 @@ class Atendente(Pessoa):
                 condicao = input("Deseja cadastrar outro produto? Digite 's' para SIM ou 'n' para NÃO \n")
                 cursor.execute('insert into produto (nomeProduto, preço) values ("%s", "%s")' % (produto1, preço1))
                 con.commit()
+                condicao = input("Deseja cadastrar outro produto? Digite 's' para SIM ou 'n' para NÃO \n")
+                if condicao == 'n':
+                    print("Produtos cadastrados com sucesso.")
 
         elif condicao == 'n':
             print("Produtos cadastrados com sucesso.")
